@@ -4,6 +4,9 @@ import lunar_lander_custom
 
 env=gym.make('LunarLanderCustom-v2')
 
+print("SYS PATH: ",sys.path,"\n")
+print("ENV: ", env)
+
 '''
 requires sys.path to contain path to repo root (can add manually)
 

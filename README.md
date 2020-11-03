@@ -9,7 +9,6 @@ Usage:
 
 
 ```python
-import sys
 import gym
 import lunar_lander_custom
 
