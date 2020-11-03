@@ -7,7 +7,6 @@ Environments:
 
 Usage:
 
-
 ```python
 import gym
 import lunar_lander_custom
