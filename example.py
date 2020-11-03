@@ -1,14 +1,14 @@
 '''
-requires sys.path to contain path to repo root (can add manually)
+requires sys.path to contain path to repo root (can add manually too)
 
-RUN COMMAND  python -i run.py
+RUN COMMAND  python -i example.py
 PRINT env AND INTERACT TO TEST
 PRINT sys.path TO CHECK REPO ROOT DIR
 '''
 
 import sys
 import gym
-import lunar_lander_custom
+import gym_lunar_lander_custom
 
 # print("SYS PATH: ", sys.path) # CHECK REPO ROOT DIR EXISTS
 

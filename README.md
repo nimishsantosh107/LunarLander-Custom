@@ -2,13 +2,13 @@
 
 Installation:
 
-`pip install git+https://github.com/nimishsantosh107/LunarLander-Custom.git`
+`pip install -U git+https://github.com/nimishsantosh107/LunarLander-Custom.git`
 
 Usage:
 
 ```python
 import gym
-import lunar_lander_custom
+import gym_lunar_lander_custom
 
 env=gym.make('LunarLanderMixedCustom-v0')
 ```
