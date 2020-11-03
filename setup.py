@@ -16,6 +16,6 @@ setup(
     author_email='nimishsantosh107@gmail.com',
     install_requires=requirements,
     license='unlicense',
-    packages=packages=find_packages(include=['lunar_lander_custom', 'lunar_lander_custom.*']),
+    packages=find_packages(include=['lunar_lander_custom', 'lunar_lander_custom.*']),
     zip_safe=False
 )
