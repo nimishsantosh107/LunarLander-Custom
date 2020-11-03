@@ -1,4 +1,4 @@
-# LunarLanderCustom
+# LunarLander-Custom
 
 Environments:
 
@@ -7,12 +7,13 @@ Environments:
 
 Usage:
 
+
 ```python
 import sys
-sys.path.insert(0,'./lunar_lander/')
-
 import gym
-import lunar_lander
+import lunar_lander_custom
 
 env=gym.make('LunarLanderCustom-v2')
 ```
+
+**Note:** Refer `example.py` for more instructions.
