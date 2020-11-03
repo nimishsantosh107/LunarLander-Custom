@@ -1,16 +1,17 @@
 '''
-requires sys.path to contain path to repo root (can add manually too)
-
 RUN COMMAND  python -i example.py
 PRINT env AND INTERACT TO TEST
 PRINT sys.path TO CHECK REPO ROOT DIR
+
+Note: If installed using PIP then package is added to PATH by default.
+      If installed using GIT:
+                   sys.path.insert(0, [PATH TO REPO_ROOT_DIR])
 '''
 
 import sys
 import gym
 import gym_lunar_lander_custom
 
-# print("SYS PATH: ", sys.path) # CHECK REPO ROOT DIR EXISTS
 
 env=gym.make('LunarLanderMixedCustom-v0')
 
