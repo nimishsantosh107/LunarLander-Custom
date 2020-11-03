@@ -1,5 +1,18 @@
 # LunarLander-Custom
 
+Installation:
+
+`pip install git+https://github.com/nimishsantosh107/LunarLander-Custom.git`
+
+Usage:
+
+```python
+import gym
+import lunar_lander_custom
+
+env=gym.make('LunarLanderMixedCustom-v0')
+```
+
 Default Environments:
 
 * `LunarLanderDefault-v2` - Same as original LunarLander-v2
@@ -17,13 +30,5 @@ Custom Environments:
 |`action[0]` | **Main Engine** <br> `Discrete(2)` <br> `0` - 0% power <br> `1` - 100% power|
 |`action[1]` <br> or <br> `action[1][0]` | **Orientation Engines** <br> `Box(-1,1, shape=(1,))` <br> `action[1][0]` because shape=(1,) <br> `[-1.0, -0.5)` - Left: 50%-100% power <br> `[-0.5, +0.5]` - 0% power <br> `(+0.5, +1.0]` - Right: 50%-100% power |
 
-Usage:
-
-```python
-import gym
-import lunar_lander_custom
-
-env=gym.make('LunarLanderMixedCustom-v0')
-```
 
 **Note:** Refer `example.py` for more instructions.
