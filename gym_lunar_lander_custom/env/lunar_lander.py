@@ -376,14 +376,9 @@ class LunarLander(gym.Env, EzPickle):
 class LunarLanderContinuous(LunarLander):
     continuous = True
 
-class LunarLanderMixed(gym.Env, EzPickle):
-    metadata = {
-        'render.modes': ['human', 'rgb_array'],
-        'video.frames_per_second' : FPS
-    }
-
+class LunarLanderMixed(LunarLander):
+    
     mixed = True
-    continuous = False
 
     def __init__(self):
         EzPickle.__init__(self)
@@ -409,21 +404,6 @@ class LunarLanderMixed(gym.Env, EzPickle):
             ))
 
         self.reset()
-
-    def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
-        return [seed]
-
-    def _destroy(self):
-        if not self.moon: return
-        self.world.contactListener = None
-        self._clean_particles(True)
-        self.world.DestroyBody(self.moon)
-        self.moon = None
-        self.world.DestroyBody(self.lander)
-        self.lander = None
-        self.world.DestroyBody(self.legs[0])
-        self.world.DestroyBody(self.legs[1])
 
     def reset(self):
         self._destroy()
@@ -521,27 +501,6 @@ class LunarLanderMixed(gym.Env, EzPickle):
         reset_action = (0, np.array([0], dtype=np.float32))
         return self.step(reset_action)[0]
 
-    def _create_particle(self, mass, x, y, ttl):
-        p = self.world.CreateDynamicBody(
-            position = (x, y),
-            angle=0.0,
-            fixtures = fixtureDef(
-                shape=circleShape(radius=2/SCALE, pos=(0, 0)),
-                density=mass,
-                friction=0.1,
-                categoryBits=0x0100,
-                maskBits=0x001,  # collide only with ground
-                restitution=0.3)
-                )
-        p.ttl = ttl
-        self.particles.append(p)
-        self._clean_particles(False)
-        return p
-
-    def _clean_particles(self, all):
-        while self.particles and (all or self.particles[0].ttl < 0):
-            self.world.DestroyBody(self.particles.pop(0))
-
     def step(self, action):
         '''
         action - Tuple(Discrete(),Box()) - example: (1, array([0.19599484], dtype=float32))
@@ -636,48 +595,6 @@ class LunarLanderMixed(gym.Env, EzPickle):
             reward = +100
         return np.array(state, dtype=np.float32), reward, done, {}
 
-    def render(self, mode='human'):
-        from gym.envs.classic_control import rendering
-        if self.viewer is None:
-            self.viewer = rendering.Viewer(VIEWPORT_W, VIEWPORT_H)
-            self.viewer.set_bounds(0, VIEWPORT_W/SCALE, 0, VIEWPORT_H/SCALE)
-
-        for obj in self.particles:
-            obj.ttl -= 0.15
-            obj.color1 = (max(0.2, 0.2+obj.ttl), max(0.2, 0.5*obj.ttl), max(0.2, 0.5*obj.ttl))
-            obj.color2 = (max(0.2, 0.2+obj.ttl), max(0.2, 0.5*obj.ttl), max(0.2, 0.5*obj.ttl))
-
-        self._clean_particles(False)
-
-        for p in self.sky_polys:
-            self.viewer.draw_polygon(p, color=(0, 0, 0))
-
-        for obj in self.particles + self.drawlist:
-            for f in obj.fixtures:
-                trans = f.body.transform
-                if type(f.shape) is circleShape:
-                    t = rendering.Transform(translation=trans*f.shape.pos)
-                    self.viewer.draw_circle(f.shape.radius, 20, color=obj.color1).add_attr(t)
-                    self.viewer.draw_circle(f.shape.radius, 20, color=obj.color2, filled=False, linewidth=2).add_attr(t)
-                else:
-                    path = [trans*v for v in f.shape.vertices]
-                    self.viewer.draw_polygon(path, color=obj.color1)
-                    path.append(path[0])
-                    self.viewer.draw_polyline(path, color=obj.color2, linewidth=2)
-
-        for x in [self.helipad_x1, self.helipad_x2]:
-            flagy1 = self.helipad_y
-            flagy2 = flagy1 + 50/SCALE
-            self.viewer.draw_polyline([(x, flagy1), (x, flagy2)], color=(1, 1, 1))
-            self.viewer.draw_polygon([(x, flagy2), (x, flagy2-10/SCALE), (x + 25/SCALE, flagy2 - 5/SCALE)],
-                                     color=(0.8, 0.8, 0))
-
-        return self.viewer.render(return_rgb_array=mode == 'rgb_array')
-
-    def close(self):
-        if self.viewer is not None:
-            self.viewer.close()
-            self.viewer = None
 
 
 def heuristic(env, s):
