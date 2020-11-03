@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requirements = [
     'box2d-py~=2.3.5',
@@ -16,6 +16,6 @@ setup(
     author_email='nimishsantosh107@gmail.com',
     install_requires=requirements,
     license='unlicense',
-    packages=['lunar_lander_custom'],
+    packages=packages=find_packages(include=['lunar_lander_custom', 'lunar_lander_custom.*']),
     zip_safe=False
 )
