@@ -7,7 +7,7 @@ requirements = [
 ]
 
 setup(
-    name='lunar_lander_custom',
+    name='gym_lunar_lander_custom',
     version='0.0.1',
     python_requires='>=3.5',
     description='LunarLander with Mixed Action Space',
@@ -16,6 +16,6 @@ setup(
     author_email='nimishsantosh107@gmail.com',
     install_requires=requirements,
     license='unlicense',
-    packages=find_packages(include=['lunar_lander_custom', 'lunar_lander_custom.*']),
+    packages=find_packages(include=['gym_lunar_lander_custom', 'gym_lunar_lander_custom.*']),
     zip_safe=False
 )
